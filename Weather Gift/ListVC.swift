@@ -10,6 +10,8 @@ import UIKit
 class ListVC: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var editBarButton: UIBarButtonItem!
+    @IBOutlet weak var addBarButton: UIBarButtonItem!
     
     var locationArray = [String]()
     var currentPage = 0
@@ -28,6 +30,21 @@ class ListVC: UIViewController {
             destination.locationArray = locationArray
         }
     }
+    
+    @IBAction func editBarButtonPressed(_ sender: UIBarButtonItem) {
+        if tableView.isEditing == true {
+            tableView.setEditing(false, animated: true)
+            editBarButton.title = "Edit"
+            addBarButton = true
+        } else {
+            tableView.setEditing(true, animated: true)
+            editBarButton.title = "Done"
+            addBarButton.isEnabled = false
+        }
+    }
+    
+    
+    
 }
 
 extension ListVC: UITableViewDelegate, UITableViewDataSource {
@@ -40,4 +57,18 @@ extension ListVC: UITableViewDelegate, UITableViewDataSource {
         cell.textLabel?.text = locationArray[indexPath.row]
         return cell
     }
+    
+    //MARK:- TableView Editing Functions
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            locationArray.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+        let itemToMove = locationArray[sourceIndexPath.row]
+        locationArray.insert(itemToMove, at: destinationIndexPath.row)
+    }
+    
 }
