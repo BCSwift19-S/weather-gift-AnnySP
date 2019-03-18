@@ -13,6 +13,7 @@ class WeatherLocation {
     var name = ""
     var corrdinates = ""
     var currentTemp = "--"
+    var dailySumamry = ""
     
     func getWeather(completed: @escaping () -> ()) {
         let weatherURL = urlBase + urlAPIKey + corrdinates
@@ -25,7 +26,12 @@ class WeatherLocation {
                     let roundedTemp = String(format: "%3.f", temperature)
                     self.currentTemp = roundedTemp + "°"
                 } else {
-                    print("Could not return a temperature")
+                    print("Could not return a temperature.")
+                }
+                if let summary = json["daily"]["summary"].string {
+                    self.dailySumamry = summary
+                } else {
+                    print("Cold not return a summary.")
                 }
             case .failure(let error):
                 print(error)

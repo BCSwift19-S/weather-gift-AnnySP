@@ -24,7 +24,9 @@ class DetailVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         if currentPage != 0 {
-            updateUserInterface()
+            self.locationArray[0].getWeather {
+                self.updateUserInterface()
+            }
         }
     }
     
@@ -39,6 +41,7 @@ class DetailVC: UIViewController {
         locationLabel.text = locationArray[currentPage].name
         dateLabel.text = locationArray[currentPage].corrdinates
         temperatureLabel.text = locationArray[currentPage].currentTemp
+        summaryLabel.text = locationArray[currentPage].dailySumamry
     }
 }
 
