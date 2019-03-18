@@ -78,7 +78,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="61.600000000000001" y="26.53673163418291"/>
+            <point key="canvasLocation" x="76" y="40"/>
         </scene>
         <!--PageVC-->
         <scene sceneID="vUv-lc-SsN">
@@ -126,7 +126,11 @@
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="ws6-MQ-faC"/>
-                                    <barButtonItem systemItem="add" id="fh5-TC-3Pj"/>
+                                    <barButtonItem systemItem="add" id="fh5-TC-3Pj">
+                                        <connections>
+                                            <action selector="addBarButtonPressed:" destination="vma-q2-UFu" id="Mim-6u-e5R"/>
+                                        </connections>
+                                    </barButtonItem>
                                 </items>
                             </toolbar>
                         </subviews>

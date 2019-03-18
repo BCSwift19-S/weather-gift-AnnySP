@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import GooglePlaces
 
 class ListVC: UIViewController {
 
@@ -35,7 +36,7 @@ class ListVC: UIViewController {
         if tableView.isEditing == true {
             tableView.setEditing(false, animated: true)
             editBarButton.title = "Edit"
-            addBarButton = true
+            addBarButton.isEnabled = true
         } else {
             tableView.setEditing(true, animated: true)
             editBarButton.title = "Done"
@@ -43,9 +44,15 @@ class ListVC: UIViewController {
         }
     }
     
+    @IBAction func addBarButtonPressed(_ sender: UIBarButtonItem) {
+        let autocompleteController = GMSAutocompleteViewController()
+        autocompleteController.delegate = self
+        present(autocompleteController, animated: true, completion: nil)
+    }
     
     
 }
+
 
 extension ListVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -58,6 +65,7 @@ extension ListVC: UITableViewDelegate, UITableViewDataSource {
         return cell
     }
     
+    
     //MARK:- TableView Editing Functions
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
@@ -66,9 +74,51 @@ extension ListVC: UITableViewDelegate, UITableViewDataSource {
         }
     }
     
-    func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         let itemToMove = locationArray[sourceIndexPath.row]
+        locationArray.remove(at: sourceIndexPath.row)
         locationArray.insert(itemToMove, at: destinationIndexPath.row)
     }
     
+    
+    //MARK:- tableView methods to freeze the first cell
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return (indexPath.row != 0 ? true : false)
+    }
+    
+    func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+        return (indexPath.row != 0 ? true : false)
+    }
+    
+    func tableView(_ tableView: UITableView, targetIndexPathForMoveFromRowAt sourceIndexPath: IndexPath, toProposedIndexPath proposedDestinationIndexPath: IndexPath) -> IndexPath {
+        return (proposedDestinationIndexPath.row == 0 ? sourceIndexPath : proposedDestinationIndexPath)
+    }
+}
+
+
+extension ListVC: GMSAutocompleteViewControllerDelegate {
+    
+    func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {
+        print("Place name: \(place.name)")
+        print("Place address: \(place.formattedAddress)")
+        print("Place attributions: \(place.attributions)")
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func viewController(_ viewController: GMSAutocompleteViewController, didFailAutocompleteWithError error: Error) {
+        print("Error: ", error.localizedDescription)
+    }
+    
+    func wasCancelled(_ viewController: GMSAutocompleteViewController) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func didRequestAutocompletePredictions(_ viewController: GMSAutocompleteViewController) {
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
+    }
+    
+    func didUpdateAutocompletePredictions(_ viewController: GMSAutocompleteViewController) {
+        UIApplication.shared.isNetworkActivityIndicatorVisible = false
+    }
+      
 }
