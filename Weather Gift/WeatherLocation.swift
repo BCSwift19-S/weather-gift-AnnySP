@@ -6,8 +6,19 @@
 //
 
 import Foundation
+import Alamofire
 
-struct WeatherLocation {
+class WeatherLocation {
     var name = ""
     var corrdinates = ""
+    
+    func getWeather() {
+        let weatherURL = urlBase + urlAPIKey + corrdinates
+        print(weatherURL)
+        
+        Alamofire.request(weatherURL).responseJSON { response in
+            print(response)
+        }
+    }
 }
+
