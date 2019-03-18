@@ -16,6 +16,7 @@
 		DE3BA99422368E5C006C59D1 /* DetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE3BA99322368E5C006C59D1 /* DetailVC.swift */; };
 		DE3BA9962236952F006C59D1 /* ListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE3BA9952236952F006C59D1 /* ListVC.swift */; };
 		DE3BA99822369951006C59D1 /* PageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE3BA99722369951006C59D1 /* PageVC.swift */; };
+		DE50C84122401A1B0082BB03 /* WeatherLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE50C84022401A1B0082BB03 /* WeatherLocation.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		DE3BA99322368E5C006C59D1 /* DetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailVC.swift; sourceTree = "<group>"; };
 		DE3BA9952236952F006C59D1 /* ListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListVC.swift; sourceTree = "<group>"; };
 		DE3BA99722369951006C59D1 /* PageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageVC.swift; sourceTree = "<group>"; };
+		DE50C84022401A1B0082BB03 /* WeatherLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherLocation.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,7 +62,6 @@
 				937DE81D354DC76327B649F2 /* Pods-Weather Gift.debug.xcconfig */,
 				5FB3D0BD58CC73C9F1A5CC32 /* Pods-Weather Gift.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -87,6 +88,7 @@
 			children = (
 				DE3BA98122367D95006C59D1 /* AppDelegate.swift */,
 				DE3BA98322367D95006C59D1 /* ViewController.swift */,
+				DE50C84022401A1B0082BB03 /* WeatherLocation.swift */,
 				DE3BA99722369951006C59D1 /* PageVC.swift */,
 				DE3BA99322368E5C006C59D1 /* DetailVC.swift */,
 				DE3BA9952236952F006C59D1 /* ListVC.swift */,
@@ -247,6 +249,7 @@
 				DE3BA98422367D95006C59D1 /* ViewController.swift in Sources */,
 				DE3BA98222367D95006C59D1 /* AppDelegate.swift in Sources */,
 				DE3BA99422368E5C006C59D1 /* DetailVC.swift in Sources */,
+				DE50C84122401A1B0082BB03 /* WeatherLocation.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

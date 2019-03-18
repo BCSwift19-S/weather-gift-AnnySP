@@ -14,7 +14,7 @@ class ListVC: UIViewController {
     @IBOutlet weak var editBarButton: UIBarButtonItem!
     @IBOutlet weak var addBarButton: UIBarButtonItem!
     
-    var locationArray = [String]()
+    var locationArray = [WeatherLocation]()
     var currentPage = 0
     
     override func viewDidLoad() {
@@ -61,7 +61,7 @@ extension ListVC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "LocationCell", for: indexPath)
-        cell.textLabel?.text = locationArray[indexPath.row]
+        cell.textLabel?.text = locationArray[indexPath.row].name
         return cell
     }
     
@@ -93,16 +93,26 @@ extension ListVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, targetIndexPathForMoveFromRowAt sourceIndexPath: IndexPath, toProposedIndexPath proposedDestinationIndexPath: IndexPath) -> IndexPath {
         return (proposedDestinationIndexPath.row == 0 ? sourceIndexPath : proposedDestinationIndexPath)
     }
+    
+    func updateTable(place: GMSPlace) {
+        let newIndexPath = IndexPath(row: locationArray.count, section: 0)
+        var newWeatherLocation = WeatherLocation()
+        newWeatherLocation.name = place.name!
+        let latitude = place.coordinate.latitude
+        let longitude = place.coordinate.longitude
+        newWeatherLocation.corrdinates = "\(latitude), \(longitude)"
+        print(newWeatherLocation.corrdinates)
+        locationArray.append(newWeatherLocation)
+        tableView.insertRows(at: [newIndexPath], with: .automatic)
+    }
 }
 
 
 extension ListVC: GMSAutocompleteViewControllerDelegate {
     
     func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {
-        print("Place name: \(place.name)")
-        print("Place address: \(place.formattedAddress)")
-        print("Place attributions: \(place.attributions)")
         dismiss(animated: true, completion: nil)
+        updateTable(place: place)
     }
     
     func viewController(_ viewController: GMSAutocompleteViewController, didFailAutocompleteWithError error: Error) {
@@ -120,5 +130,5 @@ extension ListVC: GMSAutocompleteViewControllerDelegate {
     func didUpdateAutocompletePredictions(_ viewController: GMSAutocompleteViewController) {
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
     }
-      
+    
 }
