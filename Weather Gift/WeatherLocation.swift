@@ -7,6 +7,7 @@
 
 import Foundation
 import Alamofire
+import SwiftyJSON
 
 class WeatherLocation {
     var name = ""
@@ -17,7 +18,13 @@ class WeatherLocation {
         print(weatherURL)
         
         Alamofire.request(weatherURL).responseJSON { response in
-            print(response)
+            switch response.result {
+            case .success(let value):
+                let json = JSON(value)
+                print("*****json: \(json)")
+            case .failure(let error):
+                print(error)
+            }
         }
     }
 }
