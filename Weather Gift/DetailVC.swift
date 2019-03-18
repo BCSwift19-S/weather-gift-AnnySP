@@ -23,7 +23,9 @@ class DetailVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        updateUserInterface()
+        if currentPage != 0 {
+            updateUserInterface()
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -36,6 +38,7 @@ class DetailVC: UIViewController {
     func updateUserInterface() {
         locationLabel.text = locationArray[currentPage].name
         dateLabel.text = locationArray[currentPage].corrdinates
+        temperatureLabel.text = locationArray[currentPage].currentTemp
     }
 }
 
@@ -43,8 +46,6 @@ extension DetailVC: CLLocationManagerDelegate {
     func getLocation() {
         locationManager = CLLocationManager()
         locationManager.delegate = self
-        let status = CLLocationManager.authorizationStatus()
-        handleLocationAuthorizationStatus(status: status)
     }
     
     func handleLocationAuthorizationStatus(status: CLAuthorizationStatus) {
@@ -71,7 +72,6 @@ extension DetailVC: CLLocationManagerDelegate {
         let currentLatitude = currentLocation.coordinate.latitude
         let currentLongitude = currentLocation.coordinate.longitude
         let currentCoordinates = "\(currentLatitude), \(currentLongitude)"
-        print(currentCoordinates)
         dateLabel.text = currentCoordinates
         geoCoder.reverseGeocodeLocation(currentLocation, completionHandler: {
             placemarks, error in
@@ -84,8 +84,9 @@ extension DetailVC: CLLocationManagerDelegate {
             }
             self.locationArray[0].name = place
             self.locationArray[0].corrdinates = currentCoordinates
-            self.locationArray[0].getWeather()
-            self.updateUserInterface()
+            self.locationArray[0].getWeather {
+                self.updateUserInterface()
+            }
         })
     }
     
