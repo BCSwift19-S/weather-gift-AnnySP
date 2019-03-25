@@ -11,7 +11,6 @@ class PageVC: UIPageViewController {
     
     var currentPage = 0
     var locationArray = [WeatherLocation]()
-//        "Local City", "Sydney, Australia", "Accra, Ghana", "Uglich, Russia"
     var pageControl: UIPageControl!
     var listButton: UIButton!
     var barButtonWidth: CGFloat = 44
@@ -22,8 +21,7 @@ class PageVC: UIPageViewController {
         delegate = self
         dataSource = self
         
-        var newLocation = WeatherLocation()
-        newLocation.name = ""
+        var newLocation = WeatherLocation(name: "", coordinates: "")
         locationArray.append(newLocation)
         
         setViewControllers([createDetailVC(forPage: 0)], direction: .forward, animated: false, completion: nil)
